@@ -6,7 +6,6 @@ echo "Installing Java7, Git, SVN and Maven"
 apt-get install -y openjdk-7-jdk git subversion maven
 
 
-
 [ -e /etc/apt/sources.list.d/go-cd.list ] || {
   echo "Installing Go Apt Repository"
   echo "deb http://dl.bintray.com/gocd/gocd-deb /" >> /etc/apt/sources.list.d/go-cd.list
@@ -45,30 +44,26 @@ echo "   service go-agent start|status|stop"
 echo "Restarting go-server"
 service go-server start
 
-echo "Sleeping to allow go-server to finish startup (to prevent connection refused)"
-sleep 1m
+echo "Sleeping to allow go-server to finish startup (to prevent connection refused errors in go-agent)"
+sleep 30s
 
 echo "Restarting go-agent"
 service go-agent start
 
 
-
 [ -e /usr/lib/apt/methods/https ] || {
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-  apt-get update
+  echo "Docker repository uses SSL"
   apt-get install -y apt-transport-https
 }
 
 [ -e /etc/apt/sources.list.d/docker.list ] || {
-  echo "Docker installation"
+  echo "Installing docker repository"
   echo "deb https://get.docker.com/ubuntu docker main" >> /etc/apt/sources.list.d/docker.list
-  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D8576A8BA88D21E9
+  apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
   apt-get update
+  echo "Installing docker"
   apt-get install -y --force-yes lxc-docker
 }
-
-echo "Add the docker group"
-groupadd docker
 
 echo "Add the users go and vagrant to the docker group"
 gpasswd -a go docker
@@ -84,9 +79,16 @@ fi
 
 echo "Restart the Docker daemon"
 service docker restart
+sleep 10s
 
-echo "Verify docker using the following command with user go/vagrant:"
+echo "Verify docker using the following command with user 'go' or 'vagrant'"
 echo "   docker run -i -t ubuntu /bin/bash"
+
+echo "The following command takes a while, because it needs to download the base ubuntu image - it does not show output"
+echo "We need to fix this so the download process does show some output"
+
+echo "Verifying docker by running echo command by user 'go'"
+sudo -u go docker run -i -t ubuntu echo "Started echo in docker"
 
 echo "Done"
 exit 0
