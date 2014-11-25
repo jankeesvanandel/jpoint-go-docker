@@ -84,11 +84,5 @@ sleep 10s
 echo "Verify docker using the following command with user 'go' or 'vagrant'"
 echo "   docker run -i -t ubuntu /bin/bash"
 
-echo "The following command takes a while, because it needs to download the base ubuntu image - it does not show output"
-echo "We need to fix this so the download process does show some output"
-
-echo "Verifying docker by running echo command by user 'go'"
-sudo -u go docker run -i -t ubuntu echo "Started echo in docker"
-
 echo "Done"
 exit 0

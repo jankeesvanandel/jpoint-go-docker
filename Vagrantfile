@@ -12,18 +12,25 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.post_up_message =
   " === The following are useful commands within the guest ===
+
     # SSH into guest (as user vagrant):
         vagrant ssh
     # Switch to 'go' user:
         sudo su go
+
     # Start go-server and go-agent (already started by default):
         service go-server start && service go-agent start
     # Start docker service (already started by default):
         service docker start
+
     # Start bash in docker ubuntu image:
         docker run -i -t ubuntu /bin/bash
-    # List running docker images:
-        docker ps
+    # List (running) docker images:
+        docker ps -a
+    # Build the Dockerfile in /mnt/share/docker (this will take a while)
+        docker build —tag my_ubuntu-openjdk-7 /mnt/share/docker
+    # Run the docker image you built using the previous command
+        docker run -i -t my_ubuntu-openjdk-7
   "
 
   # Use the ubuntu/trusty64 Vagrant box as a starting point
