@@ -28,7 +28,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # List (running) docker images:
         docker ps -a
     # Build the Dockerfile in /mnt/share/docker (this will take a while)
-        docker build —-tag my_ubuntu-openjdk-7 /mnt/share/docker
+        docker build --tag my_ubuntu-openjdk-7 /mnt/share/docker
     # Run the docker image you built using the previous command
         docker run -i -t my_ubuntu-openjdk-7
   "
