@@ -76,6 +76,24 @@ Running the image
 
 * Clone the repository
 * CD to the checkout directory ``cd jpoint-go-docker``
+* Download the ``ubuntu/trusty64`` box using ``sh downloadbox.sh``
+  (otherwise uncomment the ``# config.vm.box = "ubuntu/trusty64"`` line in ``Vagrantfile``, and place the other ``config.vm.box = "trusty-server...`` line into comments``)
 * Bring up the vagrant image (this could take a while) ``vagrant up``
 * SSH into the guest as default user vagrant ``vagrant ssh``
 * You can change to user ``go`` which runs the Go server ``sudo su go``
+* Go Server should also be accessible at [http://localhost:8153/]() from your host
+
+
+**After startup of the image the following commands are useful**
+* SSH into guest (as user ``vagrant``):
+    ``vagrant ssh``
+* Switch to ``go`` user:
+    ``sudo su go``
+* Start bash in docker ubuntu image:
+    ``docker run -i -t ubuntu /bin/bash``
+* List (running) docker images:
+    ``docker ps -a``
+* Build the Dockerfile in ``/mnt/share/docker`` (this will take a while)
+    ``docker build --tag my_ubuntu-openjdk-7 /mnt/share/docker``
+* Run the docker image you just built using the previous command
+    ``docker run -i -t my_ubuntu-openjdk-7``
