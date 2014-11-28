@@ -18,7 +18,7 @@ public class EchoServer {
 
     private static final Logger LOGGER = Logger.getLogger(EchoServer.class.getName());
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String host = args[0];
         int port = Integer.valueOf(args[1]);
 
@@ -49,6 +49,9 @@ public class EchoServer {
             LOGGER.info("Press any key to stop the server...");
             Scanner scanner = new Scanner(System.in);
             while (true) {
+                while (!scanner.hasNext()) {
+                    Thread.sleep(1000L);
+                }
                 final String s = scanner.nextLine();
                 if (s != null && s.equalsIgnoreCase("stop")) {
                     break;
