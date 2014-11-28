@@ -1,0 +1,1 @@
+java -jar target/jpoint-go-client-jar-with-dependencies.jar localhost 8888
