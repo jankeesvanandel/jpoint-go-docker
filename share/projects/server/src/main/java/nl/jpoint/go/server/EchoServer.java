@@ -1,6 +1,5 @@
 package nl.jpoint.go.server;
 
-import java.io.Console;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Scanner;
