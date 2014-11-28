@@ -48,9 +48,9 @@ public class EchoServer {
             transport.start();
 
             LOGGER.info("Press any key to stop the server...");
-            Console console = System.console();
-            while (true) {
-                final String s = console.readLine();
+            Scanner scanner = new Scanner(System.in);
+            while (scanner.hasNext()) {
+                final String s = scanner.nextLine();
                 if (s != null && s.equalsIgnoreCase("stop")) {
                     break;
                 }
