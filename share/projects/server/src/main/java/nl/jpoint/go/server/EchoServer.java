@@ -1,14 +1,16 @@
 package nl.jpoint.go.server;
 
+import java.io.Console;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Scanner;
+import java.util.logging.Logger;
+
 import org.glassfish.grizzly.filterchain.FilterChainBuilder;
 import org.glassfish.grizzly.filterchain.TransportFilter;
 import org.glassfish.grizzly.nio.transport.TCPNIOTransport;
 import org.glassfish.grizzly.nio.transport.TCPNIOTransportBuilder;
 import org.glassfish.grizzly.utils.StringFilter;
-
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.logging.Logger;
 
 /**
  * Class initializes and starts the echo server, based on Grizzly 2.3
@@ -35,8 +37,7 @@ public class EchoServer {
         filterChainBuilder.add(new EchoFilter());
 
         // Create TCP transport
-        final TCPNIOTransport transport =
-                TCPNIOTransportBuilder.newInstance().build();
+        final TCPNIOTransport transport = TCPNIOTransportBuilder.newInstance().build();
 
         transport.setProcessor(filterChainBuilder.build());
         try {
@@ -47,8 +48,13 @@ public class EchoServer {
             transport.start();
 
             LOGGER.info("Press any key to stop the server...");
-            int read = System.in.read();
-            LOGGER.info("Read " + read);
+            Console console = System.console();
+            while (true) {
+                final String s = console.readLine();
+                if (s != null && s.equalsIgnoreCase("stop")) {
+                    break;
+                }
+            }
         } finally {
             LOGGER.info("Stopping transport...");
             // stop the transport
